@@ -12,10 +12,9 @@ from sklearn import tree
 import numpy as np
 import pandas as pd
 from statistics import mode
-app = Flask(__name__, static_folder='./static/')
 
 
-dataset = pd.read_csv("/static/kidney_disease.csv")
+dataset = pd.read_csv('kidney_disease.csv')
 dataset.drop('id', axis=1, inplace=True)
 dataset['rbc'] = dataset['rbc'].fillna(value=dataset['rbc'].mode().iloc[0])
 dataset['pc'] = dataset['pc'].fillna(value=dataset['pc'].mode().iloc[0])
@@ -71,6 +70,8 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.3, random_state=1)
 dt = DecisionTreeClassifier(criterion='entropy', random_state=0)
 dt.fit(x_train, y_train)
+
+app = Flask(__name__, static_folder='./static/')
 
 
 @app.route("/")
